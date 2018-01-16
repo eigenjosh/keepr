@@ -24,10 +24,10 @@
                       <router-link to="home">Home</router-link>
                     </li>
                     <li>
-                        <router-link to="account/register">Sign up</router-link>
-                      </li>
-                      <li>
-                          <router-link to="account/login">Login</router-link>
+                      <router-link to="account/register">Sign up</router-link>
+                    </li>
+                    <li>
+                      <router-link to="account/login">Login</router-link>
                     </li>
                   </ul>
                 </nav>
@@ -40,6 +40,7 @@
 
             <div class="mastfoot">
               <div class="inner">
+                
               </div>
             </div>
 
@@ -335,7 +336,8 @@
       width: 700px;
     }
   }
-  .jumbotron{
+
+  .jumbotron {
     background-color: rgb(211, 211, 211)
   }
 </style>
