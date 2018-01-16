@@ -52,7 +52,7 @@ export default {
   computed: {}
 };
 </script>
-<style>
+<style scoped>
 body {
   padding-top: 40px;
   padding-bottom: 40px;

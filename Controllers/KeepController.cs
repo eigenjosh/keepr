@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Keepr.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class KeepController : Controller
     {
         private readonly KeepRepository _db;
@@ -20,5 +20,10 @@ namespace Keepr.Controllers
             _db = repo;
         }
 
+        [HttpGet("api/find-keeps")]
+        public Keep Get()
+        {
+            return _db.GetAllKeeps();
+        }
     }
 }

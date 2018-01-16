@@ -35,12 +35,17 @@
             </div>
 
             <div class="inner cover">
-
+              <ul id="allKeeps">
+                <li v-for="keep in allKeeps" class="row">
+                  {{keep.name}} {{keep.image}}
+                </li>
+              </ul>
+              <router-link to="/create-keep">Create keep</router-link>
             </div>
-
             <div class="mastfoot">
+
               <div class="inner">
-                
+
               </div>
             </div>
 
@@ -90,7 +95,7 @@
     components: {
     },
     mounted() {
-      this.$store.dispatch('authenticate')
+      this.$store.dispatch('getAllKeeps')
       this.date = new Date().toJSON().split('T')[0];
     },
     computed: {
@@ -148,7 +153,6 @@
             description: '',
           }
         }
-
       }
     }
   }
