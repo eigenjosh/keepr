@@ -2,3 +2,7 @@
     --     (username, email, password)
     -- VALUES
     --     ('jaguar', 'j@j.com', 'test');
+    -- UPDATE keeps
+    -- SET imgUrl = 'https://i.ytimg.com/vi/4_iQk3-DdHE/maxresdefault.jpg'
+    -- WHERE id = 1;
+    -- SELECT * FROM keeps;

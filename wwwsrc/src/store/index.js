@@ -10,7 +10,7 @@ let api = axios.create({
 })
 
 let auth = axios.create({
-    baseURL: 'http://localhost:5000/account/',
+    baseURL: 'http://localhost:5000/',
     timeout: 2000,
     withCredentials: true
 })
@@ -151,9 +151,9 @@ var store = new vuex.Store({
 
         authenticate({ commit, dispatch }) {
             auth('authenticate')
-                .then(res => {
-                    commit('setUser', res.data.data)
-                    dispatch('initSocket', res.data.data)
+                .then(data => {
+                    commit('setUser', data)
+                    dispatch('initSocket', data)
 
                 })
                 .catch((err) => {
@@ -179,9 +179,9 @@ var store = new vuex.Store({
         //GET ALL KEEPS
 
         getAllKeeps({ commit, dispatch }) {
-            api('/find-keeps')
+            api('keeps')
                 .then(res => {
-                    commit('setKeeps', res.data.data)
+                    commit('setKeeps', res)
                 })
         },
 
@@ -189,9 +189,9 @@ var store = new vuex.Store({
 
         getVaults({ commit, dispatch }, payload) {
 
-            api('/keeps/' + payload._id + '/vaults')
+            api('keeps/' + payload._id + '/vaults')
                 .then(res => {
-                    commit('setSchedule', res.data.data)
+                    commit('setSchedule', res)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -201,7 +201,7 @@ var store = new vuex.Store({
         //GET MY KEEPS (USER)
 
         getMyKeeps({ commit, dispatch }) {
-            api(`/user-keeps`)
+            api(`user-keeps`)
                 .then(res => {
                     console.log('res to getMyKeeps: ', res)
                     commit('setMyKeeps', res.data.data)
@@ -213,7 +213,7 @@ var store = new vuex.Store({
 
         getMyVaults({ commit, dispatch }) {
 
-            api(`/user-vaults`)
+            api(`user-vaults`)
                 .then(res => {
                     console.log('res to getMyVaults: ', res)
                     commit('setUserSchedule', res.data.data)
@@ -268,7 +268,7 @@ var store = new vuex.Store({
         // ADD VAULT
         addVault({ commit, dispatch }, payload) {
             payload.vault.keepId = payload.keepId
-            api.post('vaults', payload.vault)
+            api.post('vaults/', payload.vault)
                 .then(res => {
                     console.log(res)
                     dispatch('getVaults', { _id: payload.vault.keepId })
@@ -334,7 +334,7 @@ var store = new vuex.Store({
         addToVault({ commit, dispatch }, payload) {
             payload.user.vaults[_id].push(payload.keep._id)
 
-            api.put('/user-vaults/' + vault._id, payload.user)
+            api.put('user-vaults/' + vault._id, payload.user)
                 .then(res => {
                     console.log('this keep has been added')
                     dispatch('authenticate')
@@ -362,7 +362,7 @@ var store = new vuex.Store({
                 })
         },
         getCreatedKeeps({ commit, dispatch }) {
-            api('/admin-keeps')
+            api('admin-keeps')
                 .then(res => {
                     console.log('res to get created: ', res)
                     console.log('res.data.data of get created: ', res.data.data)
@@ -374,7 +374,7 @@ var store = new vuex.Store({
         },
         //REMOVE KEEP FROM MY SCHEDULE
         removeFromMyKeeps({ commit, dispatch }, payload) {
-            api.put('/user-keeps/' + payload.keep._id, payload.keep)
+            api.put('user-keeps/' + payload.keep._id, payload.keep)
                 .then(res => {
                     console.log('this keep has been removed from user keeps')
                     dispatch('authenticate')
@@ -386,7 +386,7 @@ var store = new vuex.Store({
                 })
         },
         publishKeep({ commit, dispatch }, payload) {
-            api.put('/keeps/' + payload.keep._id, payload.keep)
+            api.put('keeps/' + payload.keep._id, payload.keep)
                 .then(res => {
                     dispatch('getAllKeeps')
                     if (payload.emit && payload.keep.published) {

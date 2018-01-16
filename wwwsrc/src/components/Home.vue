@@ -1,20 +1,14 @@
 <template>
   <div class="home">
     <header>
-
       <div class="jumbotron">
-
       </div>
     </header>
 
     <body>
-
       <div class="site-wrapper">
-
         <div class="site-wrapper-inner">
-
           <div class="cover-container">
-
             <div class="masthead clearfix">
               <div class="inner">
                 <h3 class="masthead-brand">Keepr</h3>
@@ -24,41 +18,44 @@
                       <router-link to="home">Home</router-link>
                     </li>
                     <li>
-                      <router-link to="account/register">Sign up</router-link>
+                      <router-link to="accounts/register">Sign up</router-link>
                     </li>
                     <li>
-                      <router-link to="account/login">Login</router-link>
+                      <router-link to="accounts/login">Login</router-link>
                     </li>
                   </ul>
+                  <!-- <div class="bb-docs">
+                    <ul class="compact">
+                      <li>
+                        <button class="btn-default">Sign Up</button>
+                      </li>
+                      <li>
+                        <button class="btn-info">Login</button>
+                      </li>
+                    </ul>
+                  </div> -->
                 </nav>
               </div>
             </div>
-
             <div class="inner cover">
               <ul id="allKeeps">
-                <li v-for="keep in allKeeps" class="row">
-                  {{keep.name}} {{keep.image}}
+                <li v-for="keep in testVault" class="row">
+                  <div class="col-s-4">
+                    <h4>{{keep.name}}</h4>
+                  </div>
+                  <img :src="keep.imgUrl" style="background-image: url(keep.imgUrl)" class="keepimg">
                 </li>
               </ul>
-              <router-link to="/create-keep">Create keep</router-link>
             </div>
             <div class="mastfoot">
-
               <div class="inner">
-
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
-
-
     </body>
     <footer>
-
     </footer>
   </div>
 </template>
@@ -104,6 +101,9 @@
       },
       allKeeps() {
         return this.$store.state.allKeeps
+      },
+      testVault() {
+        return this.$store.state.vault
       }
     },
     methods: {
@@ -146,7 +146,7 @@
       createKeep() {
         this.validateForm()
         if (this.validator.form) {
-          this.$store.dispatch('createEvent', { keep: this.keep, user: this.activeUser })
+          this.$store.dispatch('createKeep', { keep: this.keep, user: this.activeUser })
           this.keep = {
             name: '',
             imageUrl: '',
@@ -163,6 +163,10 @@
  * Globals
  */
 
+  /* * {
+    background-color: #000;
+  } */
+
   /* Links */
 
   a,
@@ -173,25 +177,29 @@
 
   /* Custom default button */
 
-  .btn-default,
+  /* .btn-default,
   .btn-default:hover,
   .btn-default:focus {
     color: #333;
     text-shadow: none;
     /* Prevent inheritance from `body` */
-    background-color: #fff;
+
+  /* background-color: #fff;
     border: 1px solid #fff;
   }
-
+ */
 
   /*
  * Base structure
  */
 
-  html,
   body {
     height: 100%;
-    background-color: rgb(46, 97, 173);
+    /* background-image: url("../assets/ad.jpg"); */
+  }
+
+  html {
+    background-color: rgba(40, 132, 160, 0.527);
   }
 
   body {
@@ -343,5 +351,35 @@
 
   .jumbotron {
     background-color: rgb(211, 211, 211)
+  }
+
+  h2.bb-docs {
+    font-size: 1.8rem;
+    font-family: "MozTT", Sans-serif;
+    font-weight: lighter;
+    color: #666;
+    margin: -0.1rem 0 0;
+    /* background-color: #f5f5f5; */
+    padding: 0.4rem 0.4rem 0.4rem 3rem;
+    border: solid 0.1rem #e8e8e8;
+  }
+
+  div.bb-docs {
+    padding: 1rem;
+  }
+
+  div.bb-docs.dark {
+    background: #000;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .keepimg {
+    max-height: 300px;
+    max-width: 200px;
   }
 </style>

@@ -19,12 +19,12 @@ export default new Router({
       component: Home
     },
     {
-      path: '/account/register',
+      path: '/accounts/register',
       name: 'Register',
       component: Register 
     },
     {
-      path: '/account/login',
+      path: '/accounts/login',
       name: 'Login',
       component: Login
     },

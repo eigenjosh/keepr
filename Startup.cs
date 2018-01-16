@@ -73,8 +73,8 @@ namespace Keepr
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors("CorsDevPolicy");
             }
+            app.UseCors("CorsDevPolicy");
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

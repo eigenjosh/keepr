@@ -11,16 +11,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace Keepr.Controllers
 {
     [Route("api/[controller]")]
-    public class KeepController : Controller
+    public class KeepsController : Controller
     {
         private readonly KeepRepository _db;
 
-        public KeepController(KeepRepository repo)
+        public KeepsController(KeepRepository repo)
         {
             _db = repo;
         }
 
-        [HttpGet("api/find-keeps")]
+        [HttpGet]
         public Keep Get()
         {
             return _db.GetAllKeeps();

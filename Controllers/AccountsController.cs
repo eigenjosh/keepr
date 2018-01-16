@@ -11,16 +11,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace Keepr.Controllers
 {
     [Route("[controller]")]
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         private readonly UserRepository _db;
 
-        public AccountController(UserRepository repo)
+        public AccountsController(UserRepository repo)
         {
             _db = repo;
         }
 
-        [HttpPost("account/register")]
+        [HttpPost("accounts/register")]
         public async Task<UserReturnModel> Register([FromBody]RegisterUserModel creds)
         {
             if (ModelState.IsValid)
@@ -36,7 +36,7 @@ namespace Keepr.Controllers
             return null;
         }
 
-        [HttpPost("account/login")]
+        [HttpPost("accounts/login")]
         public async Task<UserReturnModel> Login([FromBody]LoginUserModel creds)
         {
             if (ModelState.IsValid)
@@ -51,7 +51,7 @@ namespace Keepr.Controllers
             }
             return null;
         }
-        [HttpGet("account/authenticate")]
+        [HttpGet("accounts/authenticate")]
         public UserReturnModel Authenticate()
         {
             var user = HttpContext.User;
@@ -77,7 +77,7 @@ namespace Keepr.Controllers
         }
 
         [Authorize]
-        [HttpPut("account/change-password")]
+        [HttpPut("accounts/change-password")]
         public string ChangePassword([FromBody]ChangeUserPasswordModel user)
         {
             if (ModelState.IsValid)
