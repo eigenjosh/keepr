@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <router-link :to="{path: 'keep/' + keep.id}">
-                    <button class="lt-btn event-btn word-wrap" @click="setActiveKeep(keep)">
+                    <button class="lt-btn keep-btn word-wrap" @click="setActiveKeep(keep)">
                         <div class="col-xs-12">
                             <h3>{{keep.name}}</h3>
                         </div>

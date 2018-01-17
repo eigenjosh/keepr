@@ -12,13 +12,14 @@
             <div class="masthead clearfix">
               <div class="inner">
                 <h3 class="masthead-brand">Keepr</h3>
+                <p>{{activeUser.name}}</p>
                 <nav>
                   <ul class="nav masthead-nav">
                     <li class="active">
                       <router-link to="home">Home</router-link>
                     </li>
                     <li>
-                      <router-link to="accounts/register">Sign up</router-link>
+                      <router-link :to="{name: 'Register'}">Sign up</router-link>
                     </li>
                     <li>
                       <router-link to="accounts/login">Login</router-link>
@@ -28,17 +29,9 @@
               </div>
             </div>
             <div class="inner cover">
-              <ul id="allKeeps">
-                <div v-for="keep in vault" class="row">
-                  <div v-if="keep">
-                    <keep :keep="keep" class="keep"></keep>
-                  </div>
-                </div>
-              </ul>
+              <keep v-for="(keep) in homeVault" v-bind:keep="keep" v-bind:key="keep.id"></keep>
             </div>
             <div class="mastfoot">
-              <div class="inner">
-              </div>
             </div>
           </div>
         </div>
@@ -46,25 +39,25 @@
     </body>
     <footer>
       <div>
-        <router-link :to="{name: Register}">Sign up</router-link>
-        <router-link :to="{name: Login}">Login</router-link>
-      </div>
+          <router-link to="accounts/register">Sign up</router-link>
+          <router-link to="accounts/login">Login</router-link>
+        </div>
     </footer>
   </div>
 </template>
 
 <script>
-  import Keep from './keep'
+  import Register from './Register.vue'
+  import Keep from './Keep.vue'
+  import Login from './Login.vue'
   export default {
     name: 'home',
     data() {
       return {
         date: Date,
         signUp: {
-          firstName: '',
-          lastName: '',
+          username: '',
           email: '',
-          name: '',
           password: '',
           rPassword: ''
         },
@@ -74,7 +67,7 @@
           password: ''
         },
         keep: {
-          id: _id,
+          id: '',
           name: '',
           description: '',
           imgUrl: '',
@@ -86,7 +79,9 @@
       }
     },
     components: {
-      Keep
+      Keep,
+      Register,
+      Login
     },
     mounted() {
       this.$store.dispatch('getAllKeeps')
@@ -99,27 +94,11 @@
       allKeeps() {
         return this.$store.state.allKeeps
       },
-      vault() {
+      homeVault() {
         return this.$store.state.vault
       }
     },
     methods: {
-      validateZip() {
-        this.validator.zip = (this.keep.zip.length == 5)
-      },
-      validateStartDate() {
-        this.validator.startDate = (new Date(this.keep.startDate).getTime() >= new Date(this.date).getTime())
-      },
-      validateEndDate() {
-        this.validator.endDate = (new Date(this.keep.endDate).getTime() >= new Date(this.keep.startDate).getTime())
-      },
-      validateForm() {
-        this.validateZip()
-        this.validateStartDate()
-        this.validateEndDate()
-        this.validator.form = (this.validator.zip && this.validator.startDate && this.validator.endDate)
-        console.log('validator: ', this.validator)
-      },
       submitLogin() {
 
         this.$store.dispatch('login', this.login)
@@ -130,7 +109,6 @@
       },
       submitRegister() {
         if (this.signUp.password == this.signUp.rPassword) {
-          this.signUp.name = this.signUp.firstName + ' ' + this.signUp.lastName
           this.$store.dispatch('register', this.signUp)
         } else {
           this.error = true

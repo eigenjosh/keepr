@@ -10,7 +10,7 @@ let api = axios.create({
 })
 
 let auth = axios.create({
-    baseURL: 'http://localhost:5000/accounts/',
+    baseURL: 'http://localhost:5000/accounts',
     timeout: 2000,
     withCredentials: true
 })
@@ -100,8 +100,8 @@ var store = new vuex.Store({
             auth.post('login', payload)
                 .then(res => {
                     console.log("successful login")
-                    commit('setUser', res.data.data)
-                    dispatch('initSocket', res.data.data)
+                    commit('setUser', res.data)
+                    dispatch('initSocket', res.data)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -115,8 +115,8 @@ var store = new vuex.Store({
 
             auth.post('register', payload)
                 .then(res => {
-                    commit('setUser', res.data.data)
-                    dispatch('initSocket', res.data.data)
+                    commit('setUser', res.data)
+                    dispatch('initSocket', res.data)
                 })
                 .catch((err) => {
                     { commit('handleError', err) }
@@ -127,9 +127,9 @@ var store = new vuex.Store({
 
         authenticate({ commit, dispatch }) {
             auth('authenticate')
-                .then(data => {
-                    commit('setUser', data)
-                    dispatch('initSocket', data)
+                .then(res => {
+                    commit('setUser', res.data)
+                    dispatch('initSocket', res.data)
 
                 })
                 .catch((err) => {
@@ -167,7 +167,7 @@ var store = new vuex.Store({
 
             api('keeps/' + payload._id + '/vaults')
                 .then(res => {
-                    commit('setSchedule', res)
+                    commit('setSchedule', res.data)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -179,8 +179,8 @@ var store = new vuex.Store({
         getMyKeeps({ commit, dispatch }) {
             api(`user-keeps`)
                 .then(res => {
-                    console.log('res to getMyKeeps: ', res)
-                    commit('setMyKeeps', res.data.data)
+                    console.log('res to getMyKeeps: ', res.data)
+                    commit('setMyKeeps', res.data)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -191,8 +191,8 @@ var store = new vuex.Store({
 
             api(`user-vaults`)
                 .then(res => {
-                    console.log('res to getMyVaults: ', res)
-                    commit('setUserSchedule', res.data.data)
+                    console.log('res to getMyVaults: ', res.data)
+                    commit('setUserSchedule', res.data)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -205,10 +205,10 @@ var store = new vuex.Store({
 
             api.post('keeps/', payload.keep)
                 .then(res => {
-                    console.log('res to create keep: ', res.data.data)
+                    console.log('res to create keep: ', res.data)
                     dispatch('getAllKeeps')
                     dispatch('getCreatedKeeps')
-                    dispatch('addToMyKeeps', { user: payload.user, keep: res.data.data })
+                    dispatch('addToMyKeeps', { user: payload.user, keep: res.data })
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -219,7 +219,7 @@ var store = new vuex.Store({
         getVaultById({ commit, dispatch }, vault) {
             api('vaults/' + vault._id)
                 .then(res => {
-                    commit('setActiveVault', res.data.data)
+                    commit('setActiveVault', res.data)
                     dispatch('joinRoom', vault._id)
                 })
                 .catch(err => {
@@ -232,7 +232,7 @@ var store = new vuex.Store({
 
             api('keeps/' + keep._id)
                 .then(res => {
-                    commit('setActiveKeep', res.data.data)
+                    commit('setActiveKeep', res.data)
                     dispatch('getVaults', { _id: keep._id })
                     dispatch('joinRoom', keep._id)
                 })
@@ -246,7 +246,7 @@ var store = new vuex.Store({
             payload.vault.keepId = payload.keepId
             api.post('vaults/', payload.vault)
                 .then(res => {
-                    console.log(res)
+                    console.log(res.data)
                     dispatch('getVaults', { _id: payload.vault.keepId })
                     if (payload.emit) {
                         payload.action = 'getVaults'
@@ -294,8 +294,8 @@ var store = new vuex.Store({
 
             api.delete('vaults/' + payload.vault._id)
                 .then(res => {
-                    console.log("delete request:", res)
-                    dispatch('getVaults', { _id: res.data.data.keepId })
+                    console.log("delete request:", res.data)
+                    dispatch('getVaults', { _id: res.keepId })
                     if (payload.emit) {
                         payload.action = 'getVaults'
                         dispatch('emitData', payload)
@@ -325,7 +325,7 @@ var store = new vuex.Store({
 
             api.delete('keeps/' + payload.keep._id)
                 .then(res => {
-                    console.log('res to delete keep: ', res.data.data)
+                    console.log('res to delete keep: ', res.data)
                     router.push('/admin-keeps')
                     dispatch('getAllKeeps')
                     if (payload.emit) {
@@ -340,9 +340,9 @@ var store = new vuex.Store({
         getCreatedKeeps({ commit, dispatch }) {
             api('admin-keeps')
                 .then(res => {
-                    console.log('res to get created: ', res)
-                    console.log('res.data.data of get created: ', res.data.data)
-                    commit('setAdminKeeps', res.data.data)
+                    console.log('res to get created: ', res.data)
+                    console.log('res.data.data.data of get created: ', res.data)
+                    commit('setAdminKeeps', res.data)
                 })
                 .catch(err => {
                     commit('handleError', err)

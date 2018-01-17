@@ -20,7 +20,7 @@ namespace Keepr.Controllers
             _db = repo;
         }
 
-        [HttpPost("accounts/register")]
+        [HttpPost("register")]
         public async Task<UserReturnModel> Register([FromBody]RegisterUserModel creds)
         {
             if (ModelState.IsValid)
@@ -36,7 +36,7 @@ namespace Keepr.Controllers
             return null;
         }
 
-        [HttpPost("accounts/login")]
+        [HttpPost("login")]
         public async Task<UserReturnModel> Login([FromBody]LoginUserModel creds)
         {
             if (ModelState.IsValid)
@@ -51,7 +51,7 @@ namespace Keepr.Controllers
             }
             return null;
         }
-        [HttpGet("accounts/authenticate")]
+        [HttpGet("authenticate")]
         public UserReturnModel Authenticate()
         {
             var user = HttpContext.User;
@@ -77,7 +77,7 @@ namespace Keepr.Controllers
         }
 
         [Authorize]
-        [HttpPut("accounts/change-password")]
+        [HttpPut("change-password")]
         public string ChangePassword([FromBody]ChangeUserPasswordModel user)
         {
             if (ModelState.IsValid)
