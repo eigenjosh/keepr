@@ -44,7 +44,7 @@
     },
     components: {},
     mounted() {
-      // this.$store.dispatch("authenticate");
+      this.$store.dispatch("authenticate");
       this.date = new Date().toJSON().split("T")[0];
     },
     computed: {}

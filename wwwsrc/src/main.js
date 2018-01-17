@@ -11,10 +11,10 @@ let server = axios.create({
   withCredentials: true
 })
 
-// server.post('accounts/login', { email: document.getElementById("inputEmail"), password: document.getElementById("inputPassword") }).then(res => {
-//   console.log(res)
-// }).catch(err => console.log(err))
-// server.get('accounts/authenticate').then(x => console.log(x))
+server.post('accounts/login', { email: document.getElementById("inputEmail"), password: document.getElementById("inputPassword") }).then(res => {
+  console.log(res)
+}).catch(err => console.log(err))
+server.get('accounts/authenticate').then(x => console.log(x))
 
 server.get("api/values").then(res => {
   console.log(res)

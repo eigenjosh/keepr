@@ -24,27 +24,16 @@
                       <router-link to="accounts/login">Login</router-link>
                     </li>
                   </ul>
-                  <!-- <div class="bb-docs">
-                    <ul class="compact">
-                      <li>
-                        <button class="btn-default">Sign Up</button>
-                      </li>
-                      <li>
-                        <button class="btn-info">Login</button>
-                      </li>
-                    </ul>
-                  </div> -->
                 </nav>
               </div>
             </div>
             <div class="inner cover">
               <ul id="allKeeps">
-                <li v-for="keep in testVault" class="row">
-                  <div class="col-s-4">
-                    <h4>{{keep.name}}</h4>
+                <div v-for="keep in vault" class="row">
+                  <div v-if="keep">
+                    <keep :keep="keep" class="keep"></keep>
                   </div>
-                  <img :src="keep.imgUrl" style="background-image: url(keep.imgUrl)" class="keepimg">
-                </li>
+                </div>
               </ul>
             </div>
             <div class="mastfoot">
@@ -56,11 +45,16 @@
       </div>
     </body>
     <footer>
+      <div>
+        <router-link :to="{name: Register}">Sign up</router-link>
+        <router-link :to="{name: Login}">Login</router-link>
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
+  import Keep from './keep'
   export default {
     name: 'home',
     data() {
@@ -80,9 +74,11 @@
           password: ''
         },
         keep: {
+          id: _id,
           name: '',
           description: '',
-          imgUrl: ''
+          imgUrl: '',
+          userId: ''
         },
         validator: {
           form: false
@@ -90,6 +86,7 @@
       }
     },
     components: {
+      Keep
     },
     mounted() {
       this.$store.dispatch('getAllKeeps')
@@ -102,7 +99,7 @@
       allKeeps() {
         return this.$store.state.allKeeps
       },
-      testVault() {
+      vault() {
         return this.$store.state.vault
       }
     },
@@ -158,70 +155,33 @@
   }
 </script>
 
-<style>
-  /*
- * Globals
- */
-
-  /* * {
-    background-color: #000;
-  } */
-
-  /* Links */
-
+<style scoped>
   a,
   a:focus,
   a:hover {
     color: #fff;
   }
 
-  /* Custom default button */
-
-  /* .btn-default,
-  .btn-default:hover,
-  .btn-default:focus {
-    color: #333;
-    text-shadow: none;
-    /* Prevent inheritance from `body` */
-
-  /* background-color: #fff;
-    border: 1px solid #fff;
-  }
- */
-
-  /*
- * Base structure
- */
-
-  body {
-    height: 100%;
-    /* background-image: url("../assets/ad.jpg"); */
-  }
-
-  html {
-    background-color: rgba(40, 132, 160, 0.527);
-  }
-
   body {
     color: #fff;
     text-align: center;
+    background-color: rgba(224, 183, 0, 0.747);
     text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
   }
 
   /* Extra markup and styles for table-esque vertical and horizontal centering */
 
-  .site-wrapper {
+  /* .site-wrapper {
     display: table;
     width: 100%;
     height: 100%;
-    /* For at least Firefox */
     min-height: 100%;
     -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
     box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
-  }
+  } */
 
   .site-wrapper-inner {
-    display: table-cell;
+    display: inline-block;
     vertical-align: top;
   }
 
@@ -232,10 +192,10 @@
 
   /* Padding for spacing */
 
+  /* 
   .inner {
     padding: 30px;
-  }
-
+  } */
 
   /*
  * Header
@@ -359,7 +319,7 @@
     font-weight: lighter;
     color: #666;
     margin: -0.1rem 0 0;
-    /* background-color: #f5f5f5; */
+    background-color: #f5f5f5;
     padding: 0.4rem 0.4rem 0.4rem 3rem;
     border: solid 0.1rem #e8e8e8;
   }
@@ -378,8 +338,14 @@
     list-style: none;
   }
 
-  .keepimg {
+  /* .keepimg {
     max-height: 300px;
     max-width: 200px;
+  } */
+
+  .keep {
+    /* height: 400px; */
+    width: 200px;
+
   }
 </style>

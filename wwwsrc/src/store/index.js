@@ -10,7 +10,7 @@ let api = axios.create({
 })
 
 let auth = axios.create({
-    baseURL: 'http://localhost:5000/',
+    baseURL: 'http://localhost:5000/accounts/',
     timeout: 2000,
     withCredentials: true
 })
@@ -76,11 +76,6 @@ var store = new vuex.Store({
             state.myKeeps = data
             console.log(state.myKeeps)
         },
-        //COLLABORATORS
-        setCollabs(state, data) {
-            console.log(data)
-            state.collaborators = data
-        },
         setMyVaults(state, data) {
             state.myVaults = data
             console.log(state.myVaults)
@@ -92,26 +87,7 @@ var store = new vuex.Store({
 
         setActiveVault(state, data) {
             vue.set(state, "activeVault", data)
-        },
-        setTimeSlot(state, data) {
-            state.timeSlots = data
-        },
-        // SET USER NOTES
-        setUserNotes(state, data) {
-            state.userNotes = data
-        },
-
-        // SET ACTIVE NOTE
-        setActiveNote(state, note) {
-
-            state.activeNote = {}
-            state.activeNote = note
-        },
-        setAdminKeeps(state, data) {
-            console.log()
-            state.adminKeeps = data
         }
-
     },
     actions: {
 
