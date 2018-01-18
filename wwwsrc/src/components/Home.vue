@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="inner cover">
-              <keep v-for="(keep) in homeVault" v-bind:keep="keep" v-bind:key="keep.id"></keep>
+              <keep v-for="(keep) in homeVault" :keep="keep" :key="keep.id"></keep>
             </div>
             <div class="mastfoot">
             </div>
@@ -39,9 +39,9 @@
     </body>
     <footer>
       <div>
-          <router-link to="accounts/register">Sign up</router-link>
-          <router-link to="accounts/login">Login</router-link>
-        </div>
+        <router-link to="accounts/register">Sign up</router-link>
+        <router-link to="accounts/login">Login</router-link>
+      </div>
     </footer>
   </div>
 </template>
@@ -84,8 +84,10 @@
       Login
     },
     mounted() {
-      this.$store.dispatch('getAllKeeps')
+      this.$store.dispatch('getAllKeeps');
+      this.$store.dispatch('authenticate');
       this.date = new Date().toJSON().split('T')[0];
+      this.$store.dispatch('setActiveVault', homeVault)
     },
     computed: {
       activeUser() {
@@ -96,7 +98,10 @@
       },
       homeVault() {
         return this.$store.state.vault
-      }
+      },
+      handledError() {
+        return this.$store.state.error
+      },
     },
     methods: {
       submitLogin() {

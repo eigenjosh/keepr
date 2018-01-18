@@ -70,15 +70,12 @@ var store = new vuex.Store({
         },
         setKeeps(state, data) {
             state.vault = data
-            console.log(state.vault)
         },
         setMyKeeps(state, data) {
             state.myKeeps = data
-            console.log(state.myKeeps)
         },
         setMyVaults(state, data) {
             state.myVaults = data
-            console.log(state.myVaults)
         },
         setActiveKeep(state, data) {
             state.activeKeep = {}
@@ -89,7 +86,7 @@ var store = new vuex.Store({
             vue.set(state, "activeVault", data)
         }
     },
-    actions: {
+    actions:{
 
         //***LOGIN AND REGISTER***
 
@@ -101,7 +98,7 @@ var store = new vuex.Store({
                 .then(res => {
                     console.log("successful login")
                     commit('setUser', res.data)
-                    dispatch('initSocket', res.data)
+                    router.push({ name: 'Home' })
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -116,7 +113,8 @@ var store = new vuex.Store({
             auth.post('register', payload)
                 .then(res => {
                     commit('setUser', res.data)
-                    dispatch('initSocket', res.data)
+                    console.log("Account successfully created.")
+                    router.push({ name: 'Home' })                    
                 })
                 .catch((err) => {
                     { commit('handleError', err) }
@@ -129,8 +127,7 @@ var store = new vuex.Store({
             auth('authenticate')
                 .then(res => {
                     commit('setUser', res.data)
-                    dispatch('initSocket', res.data)
-
+                    console.log("Authenticated.")
                 })
                 .catch((err) => {
                     commit('handleError', err)
@@ -143,7 +140,7 @@ var store = new vuex.Store({
             auth.delete('logout')
                 .then((user) => {
                     user = {}
-
+                    console.log("Successfully logged out.")
                     commit('setUser', user)
                     commit('resetState')
                     router.push({ name: 'Home' })
@@ -220,7 +217,7 @@ var store = new vuex.Store({
             api('vaults/' + vault._id)
                 .then(res => {
                     commit('setActiveVault', res.data)
-                    dispatch('joinRoom', vault._id)
+                    // dispatch('joinRoom', vault._id)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -234,7 +231,7 @@ var store = new vuex.Store({
                 .then(res => {
                     commit('setActiveKeep', res.data)
                     dispatch('getVaults', { _id: keep._id })
-                    dispatch('joinRoom', keep._id)
+                    // dispatch('joinRoom', keep._id)
                 })
                 .catch(err => {
                     commit('handleError', err)
@@ -341,7 +338,7 @@ var store = new vuex.Store({
             api('admin-keeps')
                 .then(res => {
                     console.log('res to get created: ', res.data)
-                    console.log('res.data.data.data of get created: ', res.data)
+                    console.log('res.data of get created: ', res.data)
                     commit('setAdminKeeps', res.data)
                 })
                 .catch(err => {

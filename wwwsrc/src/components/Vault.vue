@@ -2,19 +2,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <router-link :to="{path: 'keep/' + keep.id}">
-                    <button class="lt-btn keep-btn word-wrap" @click="setActiveKeep(keep)">
+                <router-link :to="{path: 'vault/' + vault.id}">
+                    <button class="lt-btn vault-btn word-wrap" @click="setActiveVault(vault)">
                         <div class="name">
-                            <h5>{{keep.name}}</h5>
-                        </div>
-                        <div class="img-space">
-                            <img :src="keep.imgUrl" class="image">
+                            <h5>{{vault.name}}</h5>
                         </div>
                         <div class="description">
-                            <p>{{keep.description}}</p>
+                            <p>{{vault.description}}</p>
                         </div>
                         <div class="id">
-                            <p>{{keep.id}}</p>
+                            <p>{{vault.id}}</p>
                         </div>
                     </button>
                 </router-link>
@@ -25,21 +22,25 @@
 </template>
 <script>
     export default {
-        name: 'keep',
-        props: ["keep"],
+        name: 'vault',
+        props: ["vault"],
         data() {
             return {
-                
+                vault: {
+                    name: name,
+                    description: description,
+                    userId: user._id,
+                }
             }
         },
         computed: {
-            keeps() {
-                return this.$store.state.keeps
+            vaults() {
+                return this.$store.state.vaults
             }
         },
         methods: {
-            setActiveKeep(keep) {
-                this.$store.dispatch('getKeepById', keep)
+            setActiveVault(vault) {
+                this.$store.dispatch('getVaultById', vault)
             }
         }
     }
@@ -49,7 +50,8 @@
         padding-top: 50px;
         padding-bottom: 20px;
     }
-    .image{
+
+    .image {
         max-height: 400px;
         max-width: 200px;
     }

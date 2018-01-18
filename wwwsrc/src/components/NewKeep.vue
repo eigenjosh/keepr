@@ -4,6 +4,7 @@
     </div>
 </template>
 <script>
+    import Vault from './Vault.vue'
     export default {
         name: 'NewKeep',
         data() {
@@ -33,6 +34,7 @@
             }
         },
         components: {
+            Vault
         },
         mounted() {
             this.$store.dispatch('authenticate')
@@ -44,6 +46,19 @@
             },
             allKeeps() {
                 return this.$store.state.allKeeps
+            }
+        },
+        methods: {
+            createKeep() {
+                this.validateForm()
+                if (this.validator.form) {
+                    this.$store.dispatch('createKeep', { keep: this.keep, user: this.activeUser })
+                    this.keep = {
+                        name: '',
+                        imageUrl: '',
+                        description: '',
+                    }
+                }
             }
         }
     }
