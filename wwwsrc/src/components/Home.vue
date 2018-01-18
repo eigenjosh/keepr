@@ -25,7 +25,7 @@
                       <router-link :to="{name: 'Login'}">Login</router-link>
                     </li>
                     <li>
-                      <router-link :to="{name: 'NewKeep'}">CreateKeep</router-link>
+                      <router-link :to="{name: 'NewKeep'}">Create Keep</router-link>
                     </li>
                   </ul>
                 </nav>
