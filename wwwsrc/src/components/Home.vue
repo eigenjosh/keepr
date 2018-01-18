@@ -6,23 +6,26 @@
     </header>
 
     <body>
-      <div class="site-wrapper">
+      <div class="container-fluid">
         <div class="site-wrapper-inner">
           <div class="cover-container">
-            <div class="masthead clearfix">
+            <div class="masthead">
               <div class="inner">
                 <h3 class="masthead-brand">Keepr</h3>
                 <p>{{activeUser.name}}</p>
                 <nav>
                   <ul class="nav masthead-nav">
                     <li class="active">
-                      <router-link to="home">Home</router-link>
+                      <router-link :to="{name: 'Home'}">Home</router-link>
                     </li>
                     <li>
                       <router-link :to="{name: 'Register'}">Sign up</router-link>
                     </li>
                     <li>
-                      <router-link to="accounts/login">Login</router-link>
+                      <router-link :to="{name: 'Login'}">Login</router-link>
+                    </li>
+                    <li>
+                      <router-link :to="{name: 'NewKeep'}">CreateKeep</router-link>
                     </li>
                   </ul>
                 </nav>
@@ -38,10 +41,7 @@
       </div>
     </body>
     <footer>
-      <div>
-        <router-link to="accounts/register">Sign up</router-link>
-        <router-link to="accounts/login">Login</router-link>
-      </div>
+
     </footer>
   </div>
 </template>
@@ -87,7 +87,7 @@
       this.$store.dispatch('getAllKeeps');
       this.$store.dispatch('authenticate');
       this.date = new Date().toJSON().split('T')[0];
-      this.$store.dispatch('setActiveVault', homeVault)
+      this.$store.commit('setActiveVault')
     },
     computed: {
       activeUser() {
@@ -97,7 +97,7 @@
         return this.$store.state.allKeeps
       },
       homeVault() {
-        return this.$store.state.vault
+        return this.$store.state.homeVault
       },
       handledError() {
         return this.$store.state.error
@@ -105,19 +105,10 @@
     },
     methods: {
       submitLogin() {
-
         this.$store.dispatch('login', this.login)
         this.login = {
           email: '',
           password: ''
-        }
-      },
-      submitRegister() {
-        if (this.signUp.password == this.signUp.rPassword) {
-          this.$store.dispatch('register', this.signUp)
-        } else {
-          this.error = true
-          console.error({ error: "Passwords Do Not Match" })
         }
       },
       logout() {
@@ -150,18 +141,19 @@
     text-align: center;
     background-color: rgba(224, 183, 0, 0.747);
     text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+    margin-bottom: 0%;
   }
 
   /* Extra markup and styles for table-esque vertical and horizontal centering */
 
-  /* .site-wrapper {
+  .site-wrapper {
     display: table;
     width: 100%;
     height: 100%;
     min-height: 100%;
     -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
     box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
-  } */
+  }
 
   .site-wrapper-inner {
     display: inline-block;
@@ -175,10 +167,9 @@
 
   /* Padding for spacing */
 
-  /* 
   .inner {
     padding: 30px;
-  } */
+  }
 
   /*
  * Header
@@ -236,9 +227,9 @@
  * Cover
  */
 
-  .cover {
+  /* .cover {
     padding: 0 20px;
-  }
+  } */
 
   .cover .btn-lg {
     padding: 10px 20px;
@@ -264,7 +255,7 @@
   @media (min-width: 768px) {
     /* Pull out the header and footer */
     .masthead {
-      position: fixed;
+      position: absolute;
       top: 0;
     }
     .mastfoot {
@@ -293,7 +284,8 @@
   }
 
   .jumbotron {
-    background-color: rgb(211, 211, 211)
+    background-color: rgb(211, 211, 211);
+    margin-bottom: 0%;
   }
 
   h2.bb-docs {
@@ -313,22 +305,5 @@
 
   div.bb-docs.dark {
     background: #000;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  /* .keepimg {
-    max-height: 300px;
-    max-width: 200px;
-  } */
-
-  .keep {
-    /* height: 400px; */
-    width: 200px;
-
   }
 </style>

@@ -21,7 +21,7 @@ namespace Keepr.Controllers
         }
 
         [HttpGet]
-        public Keep Get()
+        public IEnumerable<Keep> Get()
         {
             return _db.GetAllKeeps();
         }

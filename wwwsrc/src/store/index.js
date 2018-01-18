@@ -22,12 +22,13 @@ var store = new vuex.Store({
         error: {},
         activeUser: {},
         keep: {},
-        allKeeps: {},
+        allKeeps: [],
         activeKeep: {},
         vault: [],
         activeVault: {},
         vaults: [],
-        myCreatedKeeps: []
+        myCreatedKeeps: [],
+        homeVault: []
     },
     mutations: {
 
@@ -68,8 +69,8 @@ var store = new vuex.Store({
                 }
             }
         },
-        setKeeps(state, data) {
-            state.vault = data
+        setAllKeeps(state, data) {
+            state.homeVault = data
         },
         setMyKeeps(state, data) {
             state.myKeeps = data
@@ -81,12 +82,11 @@ var store = new vuex.Store({
             state.activeKeep = {}
             state.activeKeep = data
         },
-
         setActiveVault(state, data) {
             vue.set(state, "activeVault", data)
         }
     },
-    actions:{
+    actions: {
 
         //***LOGIN AND REGISTER***
 
@@ -114,7 +114,7 @@ var store = new vuex.Store({
                 .then(res => {
                     commit('setUser', res.data)
                     console.log("Account successfully created.")
-                    router.push({ name: 'Home' })                    
+                    router.push({ name: 'Home' })
                 })
                 .catch((err) => {
                     { commit('handleError', err) }
@@ -154,11 +154,11 @@ var store = new vuex.Store({
         getAllKeeps({ commit, dispatch }) {
             api('keeps')
                 .then(res => {
-                    commit('setKeeps', res)
+                    this.state.homeVault.push(res.data)
+                    commit('setAllKeeps', res.data)
                 })
         },
 
-        //GET ACTIVITIES BY KEEP ID
 
         getVaults({ commit, dispatch }, payload) {
 
@@ -171,7 +171,6 @@ var store = new vuex.Store({
                 })
         },
 
-        //GET MY KEEPS (USER)
 
         getMyKeeps({ commit, dispatch }) {
             api(`user-keeps`)
@@ -196,7 +195,6 @@ var store = new vuex.Store({
                 })
         },
 
-        // CREATE NEW KEEP
 
         createKeep({ commit, dispatch }, payload) {
 

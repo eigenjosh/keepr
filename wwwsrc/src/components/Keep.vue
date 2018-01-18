@@ -29,7 +29,7 @@
         props: ["keep"],
         data() {
             return {
-                
+
             }
         },
         computed: {
@@ -45,12 +45,8 @@
     }
 </script>
 <style>
-    .img-space {
-        padding-top: 50px;
-        padding-bottom: 20px;
-    }
     .image{
-        max-height: 400px;
-        max-width: 200px;
+        max-height: 500px;
+        max-width: 300px;
     }
 </style>

@@ -12,13 +12,15 @@ let server = axios.create({
 })
 
 server.post('accounts/login', { email: document.getElementById("inputEmail"), password: document.getElementById("inputPassword") }).then(res => {
+  this.$store.dispatch('setUser')
   console.log(res)
 }).catch(err => console.log(err))
+
 server.get('accounts/authenticate').then(x => console.log(x))
 
-server.get("api/values").then(res => {
-  console.log(res)
-}).catch(err => console.log(err))
+server.post('accounts/register', { username: document.getElementById("inputUsername"), email: document.getElementById("inputEmail"), password: document.getElementById("inputPassword"), rPassword: document.getElementById("inputrPassword") }).then(res => {
+  
+})
 
 server.get("api/keeps").then(res => {
   console.log(res)

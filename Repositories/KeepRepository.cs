@@ -12,9 +12,9 @@ namespace Keepr.Repositories
         public KeepRepository(IDbConnection db) : base(db)
         {
         }
-        internal Keep GetKeepByUserId(string id)
+        internal IEnumerable<Keep> GetKeepByUserId(string id)
         {
-            Keep savedKeep = _db.QueryFirstOrDefault<Keep>(@"
+            var savedKeep = _db.Query<Keep>(@"
             SELECT * FROM users WHERE id = @id
             ", new { id });
             if (savedKeep != null)
@@ -23,9 +23,9 @@ namespace Keepr.Repositories
             }
             return null;
         }
-        internal Keep GetAllKeeps()
+        internal IEnumerable<Keep> GetAllKeeps()
         {
-            Keep keep = _db.QueryFirstOrDefault<Keep>(@"
+            var keep = _db.Query<Keep>(@"
             SELECT * FROM keeps");
             if(keep != null)
             {
