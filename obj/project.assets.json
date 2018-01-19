@@ -12847,11 +12847,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\source\\codeworks\\keepr\\Keepr.csproj",
+      "projectUniqueName": "C:\\source\\codeworks\\keepr\\Keepr.csproj",
       "projectName": "Keepr",
-      "projectPath": "c:\\source\\codeworks\\keepr\\Keepr.csproj",
+      "projectPath": "C:\\source\\codeworks\\keepr\\Keepr.csproj",
       "packagesPath": "C:\\Users\\joshe\\.nuget\\packages\\",
-      "outputPath": "c:\\source\\codeworks\\keepr\\obj\\",
+      "outputPath": "C:\\source\\codeworks\\keepr\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",
