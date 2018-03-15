@@ -21,6 +21,7 @@
     </div>
 </template>
 <script>
+    import Keep from './Keep.vue'
     export default {
         name: 'vault',
         props: ["vault"],

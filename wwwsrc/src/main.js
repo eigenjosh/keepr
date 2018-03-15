@@ -19,10 +19,14 @@ server.post('accounts/login', { email: document.getElementById("inputEmail"), pa
 server.get('accounts/authenticate').then(x => console.log(x))
 
 server.post('accounts/register', { username: document.getElementById("inputUsername"), email: document.getElementById("inputEmail"), password: document.getElementById("inputPassword"), rPassword: document.getElementById("inputrPassword") }).then(res => {
-  
-})
+  this.$store.dispatch('setUser')
+}).catch(err => console.log(err))
 
 server.get("api/keeps").then(res => {
+  console.log(res)
+}).catch(err => console.log(err))
+
+server.get("api/vaults").then(res => {
   console.log(res)
 }).catch(err => console.log(err))
 

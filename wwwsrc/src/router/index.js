@@ -2,7 +2,7 @@ import Router from 'vue-router'
 import Vue from 'vue'
 import Home from '@/components/Home'
 import CreatedKeeps from '@/components/CreatedKeeps'
-import MyKeeps from '@/components/MyKeeps'
+import UserVaults from '@/components/UserVaults'
 import NewKeep from '@/components/NewKeep'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
@@ -35,9 +35,9 @@ export default new Router({
       component: CreatedKeeps
     },
     {
-      path: '/my-keeps',
-      name: 'MyKeeps',
-      component: MyKeeps
+      path: '/user-vaults',
+      name: 'UserVaults',
+      component: UserVaults
     },
     {
       path: '/create-keep',

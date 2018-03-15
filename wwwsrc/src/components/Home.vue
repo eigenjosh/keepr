@@ -11,8 +11,8 @@
           <div class="cover-container">
             <div class="masthead">
               <div class="inner">
+                <h4 v-if="activeUser.username == null">Hello {{activeUser.username}}</h4>
                 <h3 class="masthead-brand">Keepr</h3>
-                <p>{{activeUser.name}}</p>
                 <nav>
                   <ul class="nav masthead-nav">
                     <li class="active">
@@ -22,10 +22,13 @@
                       <router-link :to="{name: 'Register'}">Sign up</router-link>
                     </li>
                     <li>
-                      <router-link :to="{name: 'Login'}">Login</router-link>
+                      <router-link v-if="activeUser.username == null" :to="{name: 'Login'}">Login</router-link>
                     </li>
                     <li>
-                      <router-link :to="{name: 'NewKeep'}">Create Keep</router-link>
+                      <router-link v-if="activeUser.username != null" :to="{name: 'Home'}" @click="logout">Log out</router-link>
+                    </li>
+                    <li>
+                      <router-link v-if="activeUser.username != null" :to="{name: 'NewKeep'}">Create Keep</router-link>
                     </li>
                   </ul>
                 </nav>
@@ -167,9 +170,10 @@
 
   /* Padding for spacing */
 
+  /* 
   .inner {
     padding: 30px;
-  }
+  } */
 
   /*
  * Header

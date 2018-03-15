@@ -16,7 +16,11 @@
                         <div class="id">
                             <p>{{keep.id}}</p>
                         </div>
-                    </button>
+                        <div v-on:mouseover="active = !active">
+                            <button class="lt-btn glyphicon-view">
+
+                            </button>
+                                            </button>
                 </router-link>
                 <hr>
             </div>
@@ -45,7 +49,7 @@
     }
 </script>
 <style>
-    .image{
+    .image {
         max-height: 500px;
         max-width: 300px;
     }
